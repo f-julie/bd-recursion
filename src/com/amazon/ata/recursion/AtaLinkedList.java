@@ -1,6 +1,7 @@
 package com.amazon.ata.recursion;
 
 import com.google.common.annotations.VisibleForTesting;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,9 +104,25 @@ public class AtaLinkedList {
      */
     public Double sum() {
         // PARTICIPANTS: calculate the sum of this AtaLinkedList
-
-        throw new UnsupportedOperationException();
+        return sumRecursive(head);
+        // throw new UnsupportedOperationException();
     }
+
+    // 1.0 -> 2.0 -> 3.0 -> 4.0 -> null
+    private Double sumRecursive(AtaNode node) {
+        if (node == null) {
+            return 0.0; // Base condition for recursion
+        }
+        return node.getData() + sumRecursive(node.getNext());
+    }
+    /*
+    sR(head)
+        1.0 + sR(2.0)
+            2.0 + sR(3.0)
+                3.0 + sR(4.0)
+                    4.0 + sR(null)
+                        0.0
+     */
 
     /**
      * Creates a new AtaLinkedList that has all of the values of this
@@ -114,9 +131,26 @@ public class AtaLinkedList {
      */
     public AtaLinkedList reverse() {
         // PARTICIPANTS: create the reversed AtaLinkedList
-
-        throw new UnsupportedOperationException();
+        return reverseRecursive(head);
+        //throw new UnsupportedOperationException();
     }
+
+    // 1.0 -> 2.0 -> 3.0 -> 4.0 -> null
+    private AtaLinkedList reverseRecursive(AtaNode node) {
+        if (node == null) {
+            return new AtaLinkedList(); // Base case for recursion
+        }
+        AtaLinkedList reversedList = reverseRecursive(node.getNext());
+        reversedList.addLast(node.getData());
+        return reversedList;
+    }
+    /*
+    rR(1.0) -- rL = 4.0 -> 3.0 -> 2.0 -> 1.0
+        rR(2.0) -- rL = r.0 -> 3.0 -> 2.0
+            rR(3.0) -- rL = 4.0 -> 3.0
+                rR(4.0) -- rL = 4.0
+                    rR(null) -- returns new link list
+     */
 
     // EXTENSION
     /**
